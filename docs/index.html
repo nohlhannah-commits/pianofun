@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PianoFun - Learn to Play Piano</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎹 PianoFun</h1>
+            <p>Learn to Play Piano the Easy Way!</p>
+        </header>
+
+        <div class="content">
+            <!-- Mode Selection -->
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="freeplay">Free Play</button>
+                <button class="mode-btn" data-mode="learn">Learn Mode</button>
+            </div>
+
+            <!-- Song Selector (visible only in learn mode) -->
+            <div class="song-selector hidden">
+                <label for="song-select">Choose a Song:</label>
+                <select id="song-select">
+                    <option value="twinkle">Twinkle, Twinkle, Little Star</option>
+                    <option value="mary">Mary Had a Little Lamb</option>
+                    <option value="children">Children (Robert Miles) - Easy</option>
+                    <option value="happy">Happy Birthday</option>
+                </select>
+                <button id="start-lesson">Start Lesson</button>
+                <button id="reset-lesson" class="hidden">Reset Lesson</button>
+            </div>
+
+            <!-- Learn Mode Info -->
+            <div class="learn-info hidden">
+                <div class="lesson-status">
+                    <h3 id="lesson-title">Lesson: Twinkle, Twinkle, Little Star</h3>
+                    <p id="lesson-progress">Press the highlighted key...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Piano Keyboard -->
+            <div class="piano-wrapper">
+                <div class="piano">
+                    <!-- White Keys C to B (20 white keys = 2 octaves approximately) -->
+                    <!-- C4 to B5 (starting from middle C) -->
+                    <div class="keys-container">
+                        <!-- C4 -->
+                        <div class="white-key" data-note="C4" data-frequency="261.63">
+                            <span class="key-label">C</span>
+                        </div>
+                        <!-- D4 -->
+                        <div class="white-key" data-note="D4" data-frequency="293.66">
+                            <span class="key-label">D</span>
+                        </div>
+                        <!-- E4 -->
+                        <div class="white-key" data-note="E4" data-frequency="329.63">
+                            <span class="key-label">E</span>
+                        </div>
+                        <!-- F4 -->
+                        <div class="white-key" data-note="F4" data-frequency="349.23">
+                            <span class="key-label">F</span>
+                        </div>
+                        <!-- G4 -->
+                        <div class="white-key" data-note="G4" data-frequency="392.00">
+                            <span class="key-label">G</span>
+                        </div>
+                        <!-- A4 -->
+                        <div class="white-key" data-note="A4" data-frequency="440.00">
+                            <span class="key-label">A</span>
+                        </div>
+                        <!-- B4 -->
+                        <div class="white-key" data-note="B4" data-frequency="493.88">
+                            <span class="key-label">B</span>
+                        </div>
+                        <!-- C5 -->
+                        <div class="white-key" data-note="C5" data-frequency="523.25">
+                            <span class="key-label">C</span>
+                        </div>
+                        <!-- D5 -->
+                        <div class="white-key" data-note="D5" data-frequency="587.33">
+                            <span class="key-label">D</span>
+                        </div>
+                        <!-- E5 -->
+                        <div class="white-key" data-note="E5" data-frequency="659.25">
+                            <span class="key-label">E</span>
+                        </div>
+                        <!-- F5 -->
+                        <div class="white-key" data-note="F5" data-frequency="698.46">
+                            <span class="key-label">F</span>
+                        </div>
+                        <!-- G5 -->
+                        <div class="white-key" data-note="G5" data-frequency="783.99">
+                            <span class="key-label">G</span>
+                        </div>
+                        <!-- A5 -->
+                        <div class="white-key" data-note="A5" data-frequency="880.00">
+                            <span class="key-label">A</span>
+                        </div>
+                        <!-- B5 -->
+                        <div class="white-key" data-note="B5" data-frequency="987.77">
+                            <span class="key-label">B</span>
+                        </div>
+                        <!-- C6 -->
+                        <div class="white-key" data-note="C6" data-frequency="1046.50">
+                            <span class="key-label">C</span>
+                        </div>
+                        <!-- D6 -->
+                        <div class="white-key" data-note="D6" data-frequency="1174.66">
+                            <span class="key-label">D</span>
+                        </div>
+                        <!-- E6 -->
+                        <div class="white-key" data-note="E6" data-frequency="1318.51">
+                            <span class="key-label">E</span>
+                        </div>
+                        <!-- F6 -->
+                        <div class="white-key" data-note="F6" data-frequency="1396.91">
+                            <span class="key-label">F</span>
+                        </div>
+                        <!-- G6 -->
+                        <div class="white-key" data-note="G6" data-frequency="1567.98">
+                            <span class="key-label">G</span>
+                        </div>
+                        <!-- A6 -->
+                        <div class="white-key" data-note="A6" data-frequency="1760.00">
+                            <span class="key-label">A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>How to Play:</h3>
+                <ul>
+                    <li><strong>Free Play:</strong> Click any key to hear the note</li>
+                    <li><strong>Learn Mode:</strong> Select a song and press the highlighted keys in order</li>
+                    <li>Watch as the keys light up to guide you</li>
+                    <li>Complete the entire song to finish the lesson!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="audio.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

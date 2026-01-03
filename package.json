@@ -1,0 +1,25 @@
+{
+  "name": "pianofun",
+  "version": "1.0.0",
+  "description": "Learning the Piano for Roblox",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nohlhannah-commits/pianofun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nohlhannah-commits/pianofun/issues"
+  },
+  "homepage": "https://github.com/nohlhannah-commits/pianofun#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
