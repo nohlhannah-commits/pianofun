@@ -83,30 +83,23 @@ const SONGS = {
 };
 
 // ==========================================
-// Note Frequency Mapping
+// Note Frequency Mapping (White and Black keys, C4 to C8)
 // ==========================================
-
 const NOTE_FREQUENCIES = {
-    'C4': 261.63,
-    'D4': 293.66,
-    'E4': 329.63,
-    'F4': 349.23,
-    'G4': 392.00,
-    'A4': 440.00,
-    'B4': 493.88,
-    'C5': 523.25,
-    'D5': 587.33,
-    'E5': 659.25,
-    'F5': 698.46,
-    'G5': 783.99,
-    'A5': 880.00,
-    'B5': 987.77,
-    'C6': 1046.50,
-    'D6': 1174.66,
-    'E6': 1318.51,
-    'F6': 1396.91,
-    'G6': 1567.98,
-    'A6': 1760.00
+    // Octave 4
+    'C4': 261.63, 'C#4': 277.18, 'D4': 293.66, 'D#4': 311.13, 'E4': 329.63,
+    'F4': 349.23, 'F#4': 369.99, 'G4': 392.00, 'G#4': 415.30, 'A4': 440.00, 'A#4': 466.16, 'B4': 493.88,
+    // Octave 5
+    'C5': 523.25, 'C#5': 554.37, 'D5': 587.33, 'D#5': 622.25, 'E5': 659.25,
+    'F5': 698.46, 'F#5': 739.99, 'G5': 783.99, 'G#5': 830.61, 'A5': 880.00, 'A#5': 932.33, 'B5': 987.77,
+    // Octave 6
+    'C6': 1046.50, 'C#6': 1108.73, 'D6': 1174.66, 'D#6': 1244.51, 'E6': 1318.51,
+    'F6': 1396.91, 'F#6': 1479.98, 'G6': 1567.98, 'G#6': 1661.22, 'A6': 1760.00, 'A#6': 1864.66, 'B6': 1975.53,
+    // Octave 7
+    'C7': 2093.00, 'C#7': 2217.46, 'D7': 2349.32, 'D#7': 2489.02, 'E7': 2637.02,
+    'F7': 2793.83, 'F#7': 2959.96, 'G7': 3135.96, 'G#7': 3322.44, 'A7': 3520.00, 'A#7': 3729.31, 'B7': 3951.07,
+    // Octave 8
+    'C8': 4186.01
 };
 
 // ==========================================
@@ -140,6 +133,7 @@ class PianoApp {
         this.lessonProgress = document.getElementById('lesson-progress');
         this.progressFill = document.getElementById('progress-fill');
         this.whiteKeys = document.querySelectorAll('.white-key');
+        this.blackKeys = document.querySelectorAll('.black-key');
     }
 
     /**
@@ -151,8 +145,8 @@ class PianoApp {
             btn.addEventListener('click', (e) => this.switchMode(e.target.dataset.mode));
         });
 
-        // Key interactions
-        this.whiteKeys.forEach(key => {
+        // Key interactions (white and black)
+        [...this.whiteKeys, ...this.blackKeys].forEach(key => {
             key.addEventListener('click', () => this.playKey(key));
             key.addEventListener('mousedown', () => this.playKey(key));
             key.addEventListener('mouseup', () => this.stopKey(key));
@@ -254,7 +248,7 @@ class PianoApp {
         this.currentSong = null;
         
         // Clear all highlights
-        this.whiteKeys.forEach(key => {
+        [...this.whiteKeys, ...this.blackKeys].forEach(key => {
             key.classList.remove('active-learn', 'pressed');
         });
 
@@ -276,7 +270,7 @@ class PianoApp {
      */
     highlightNextNote() {
         // Clear previous highlight
-        this.whiteKeys.forEach(key => {
+        [...this.whiteKeys, ...this.blackKeys].forEach(key => {
             key.classList.remove('active-learn');
         });
 
@@ -362,7 +356,7 @@ class PianoApp {
         this.playSuccessMelody();
 
         // Clear highlights
-        this.whiteKeys.forEach(key => {
+        [...this.whiteKeys, ...this.blackKeys].forEach(key => {
             key.classList.remove('active-learn');
         });
 
@@ -396,25 +390,88 @@ class PianoApp {
      * @param {KeyboardEvent} event - The keyboard event
      */
     handleKeyboardInput(event) {
-        // Map keyboard keys to piano notes
+        // Map keyboard keys to piano notes (Roblox style MIDI mapping)
+        // Number row: 1-7 and shift+1-7 for C2-B2 and C#2-A#2
+        // Number row: 8-0 and shift+8-0 for C3-E3 and C#3-A#3
+        // QWER row and shift for F3-B3 and F#3-A#3
+        // TYUI row and shift for C4-A4 and C#4-A#4
+        // etc.
         const keyMap = {
-            'c': 'C4',
-            'd': 'D4',
-            'e': 'E4',
-            'f': 'F4',
-            'g': 'G4',
-            'a': 'A4',
-            'b': 'B4',
-            'q': 'C5',
-            'w': 'D5',
-            'r': 'E5',
-            't': 'F5',
-            'y': 'G5',
-            'u': 'A5',
-            'i': 'B5',
+            // C2 to B2
+            '1': 'C2',
+            '!': 'C#2',
+            '2': 'D2',
+            '@': 'D#2',
+            '3': 'E2',
+            '4': 'F2',
+            '$': 'F#2',
+            '5': 'G2',
+            '%': 'G#2',
+            '6': 'A2',
+            '^': 'A#2',
+            '7': 'B2',
+            
+            // C3 to B3
+            '8': 'C3',
+            '&': 'C#3',
+            '9': 'D3',
+            '*': 'D#3',
+            '0': 'E3',
+            'q': 'F3',
+            'Q': 'F#3',
+            'w': 'G3',
+            'W': 'G#3',
+            'e': 'A3',
+            'E': 'A#3',
+            'r': 'B3',
+            
+            // C4 to B4
+            't': 'C4',
+            'T': 'C#4',
+            'y': 'D4',
+            'Y': 'D#4',
+            'u': 'E4',
+            'i': 'F4',
+            'I': 'F#4',
+            'o': 'G4',
+            'O': 'G#4',
+            'p': 'A4',
+            'P': 'A#4',
+            'a': 'B4',
+            
+            // C5 to B5
+            's': 'C5',
+            'S': 'C#5',
+            'd': 'D5',
+            'D': 'D#5',
+            'f': 'E5',
+            'g': 'F5',
+            'G': 'F#5',
+            'h': 'G5',
+            'H': 'G#5',
+            'j': 'A5',
+            'J': 'A#5',
+            'k': 'B5',
+            
+            // C6 to B6
+            'l': 'C6',
+            'L': 'C#6',
+            'z': 'D6',
+            'Z': 'D#6',
+            'x': 'E6',
+            'c': 'F6',
+            'C': 'F#6',
+            'v': 'G6',
+            'V': 'G#6',
+            'b': 'A6',
+            'B': 'A#6',
+            'n': 'B6',
+            
+            // C7
+            'm': 'C7',
         };
 
-        const key = event.key.toLowerCase();
+        const key = event.key;
         if (keyMap[key]) {
             const noteElement = document.querySelector(`[data-note="${keyMap[key]}"]`);
             if (noteElement && this.currentMode === 'freeplay') {
